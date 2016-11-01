@@ -1,0 +1,16 @@
+{
+  "size": 0,
+  "query": {
+    "match_all": {}
+  },
+  "aggs": {
+    "countries": {
+      "terms": {"field": "country.raw"},
+      "aggs": {
+        "sum_amount": {
+          "sum": {"field": "amount"}
+        }
+      }
+    }
+  }
+}

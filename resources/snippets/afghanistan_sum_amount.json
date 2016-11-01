@@ -1,0 +1,10 @@
+{
+  "query": {
+    "term": {"land": "afghanistan"}
+  },
+  "aggs": {
+    "sum_payments": {
+      "sum": {"field": "amount"}
+    }
+  }
+}

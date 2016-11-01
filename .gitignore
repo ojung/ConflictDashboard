@@ -1,0 +1,10 @@
+/*.deb
+/log/*
+/node_modules*
+/npm-debug.log
+/generated/CreativeTagParser.max.js
+
+# joker
+/target
+
+.DS_Store

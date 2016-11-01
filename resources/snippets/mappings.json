@@ -1,0 +1,25 @@
+{
+  "mappings": {
+    "projects": {
+      "properties": {
+        "year": {"type": "date", "format": "year"},
+        "resort": {"type": "string"},
+        "country": {
+          "type": "string",
+          "index": "not_analyzed"
+        },
+        "location": {"type": "geo_point"},
+        "title": {"type": "string"},
+        "amount": {
+          "type": "double",
+          "index": "not_analyzed"
+        },
+        "budgetTitle": {"type": "string"},
+        "projectType": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
+      }
+    }
+  }
+}

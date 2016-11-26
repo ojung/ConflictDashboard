@@ -1,0 +1,18 @@
+{
+  "size": 0,
+  "_source": ["country"],
+  "query": {
+    "match": {
+      "country": {
+        "query": "ch"
+      }
+    }
+  },
+  "aggs": {
+    "distinct_countries": {
+      "terms": {
+        "field": "country.keyword"
+      }
+    }
+  }
+}

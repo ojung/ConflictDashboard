@@ -1,7 +1,11 @@
 import {connect} from 'react-redux';
 
 import FilterBar from './FilterBar.jsx';
-import {changeFormValue, loadSuggestions, addCountry} from '../actions';
+import {
+  loadSuggestions,
+  addCountry,
+  clearSuggestions,
+} from '../actions';
 
 const mapStateToProps = ({suggestions}) => {
   return {suggestions};
@@ -10,12 +14,17 @@ const mapStateToProps = ({suggestions}) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onChange: (value) => {
+      if (value.length === 0) {
+        dispatch(clearSuggestions());
+      }
       if (value.length >= 2) {
         dispatch(loadSuggestions(value));
       }
     },
     onClick: (value) => {
-      dispatch(addCountry(value));
+      if (value.length) {
+        dispatch(addCountry(String(value)));
+      }
     },
   };
 };

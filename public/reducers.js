@@ -3,7 +3,12 @@ import {combineReducers} from 'redux';
 import {handleAction, handleActions} from 'redux-actions';
 
 import * as Actions from './actions';
-import * as Api from './api';
+
+const isFetching = handleAction(
+  Actions.setIsFetching,
+  (state, {payload: isFetching}) => isFetching,
+  false
+);
 
 const countries = handleActions({
   [Actions.addCountry]: (state, {payload: country}) => state.add(country),
@@ -20,14 +25,19 @@ const resorts = handleActions({
   [Actions.removeResort]: (state, {payload: resort}) => state.remove(resort),
 }, OrderedSet());
 
-const suggestions = handleAction(
-  Actions.loadSuggestions,
-  (state, {payload}) => OrderedSet(payload),
-  OrderedSet()
+const suggestions = handleActions({
+  [Actions.loadSuggestions]: (state, {payload}) => OrderedSet(payload),
+  [Actions.clearSuggestions]: () => OrderedSet(),
+}, OrderedSet());
+
+const stackedChartData = handleAction(
+  Actions.fetchStackedLineData,
+  (state, {payload}) => payload,
+  {labels: [], datasets: []}
 );
 
 const rootReducer = combineReducers({
-  countries, types, resorts, suggestions
+  countries, types, resorts, suggestions, stackedChartData, isFetching
 });
 
 export default rootReducer;

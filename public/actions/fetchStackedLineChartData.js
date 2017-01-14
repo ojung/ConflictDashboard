@@ -3,44 +3,52 @@ import {createAction} from 'redux-actions';
 
 import {getStackedChartData} from '../api';
 
-const extractDataSets = (buckets) => {
-  return _.flow([
-    _.map('country_buckets'),
-    _.map('buckets'),
-    _.flatten,
-    _.groupBy('key'),
-    _.mapValues(_.flow([
-      _.map('sum_by_country'),
-      _.map('value'),
-    ])),
-    _.toPairs,
-    _.reduce((result, value) => result.concat(getDataSet(value[0], value[1])), [])
-  ])(buckets);
-};
+const YEARS = [
+  '2004',
+  '2005',
+  '2006',
+  '2007',
+  '2008',
+  '2009',
+  '2010',
+  '2011',
+  '2012',
+  '2013',
+  '2014',
+];
 
-const getDataSet = (country, data) => {
-  return {
-    label: country,
-    data,
-    fill: true,
-    lineTension: 0.1,
-    backgroundColor: 'rgba(75,192,192,0.4)',
-    borderColor: 'rgba(75,192,192,1)',
-    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-    pointBorderColor: 'rgba(75,192,192,1)',
-    borderCapStyle: 'butt',
-    borderDash: [],
-    borderDashOffset: 0.0,
-    borderJoinStyle: 'miter',
-    pointBackgroundColor: '#fff',
-    pointBorderWidth: 1,
-    pointHoverRadius: 5,
-    pointHoverBorderColor: 'rgba(220,220,220,1)',
-    pointHoverBorderWidth: 2,
-    pointRadius: 1,
-    pointHitRadius: 10,
-    spanGaps: false,
+const extractDataSets = (buckets, countries) => {
+  const getCountrySumsForYear = year => {
+    const bucketForYear = _.find({key_as_string: year})(buckets);
+    return _.map(country => {
+      if (!bucketForYear) {
+        return [country, 0];
+      }
+      const value = _.flow([
+        _.get('country_buckets.buckets'),
+        _.find({key: country}),
+        _.get('sum_by_country.value')
+      ])(bucketForYear);
+      return [country, value || 0];
+    })(countries);
   };
+
+  const sumByYearByCountry = _.flow([
+    _.map(getCountrySumsForYear),
+    _.map(_.fromPairs),
+    _.zip(YEARS),
+    _.fromPairs,
+  ])(YEARS);
+
+  const sumsByCountry = _.map(country => {
+    const data = _.flow([
+      _.mapValues(country),
+      _.values,
+    ])(sumByYearByCountry);
+    return {label: country, data};
+  })(countries);
+
+  return sumsByCountry;
 };
 
 export default createAction(
@@ -48,9 +56,8 @@ export default createAction(
   filters => {
     return getStackedChartData(filters)
       .then(({aggregations: {histogram: {buckets}}}) => {
-        const years = _.map('key_as_string')(buckets);
-        const datasets = extractDataSets(buckets);
-        return {labels: years, datasets};
+        const datasets = extractDataSets(buckets, filters.countries.toJS());
+        return {labels: YEARS, datasets};
       });
   }
 );

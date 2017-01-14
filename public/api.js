@@ -28,8 +28,7 @@ export function getCountrySuggestion(input) {
         }
       }
     }
-  })
-    .then(({aggregations: {distinct_countries: {buckets}}}) => buckets);
+  });
 }
 
 export function getStackedChartData({countries}) {

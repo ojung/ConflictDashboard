@@ -2,8 +2,13 @@ import {createAction, createActions} from 'redux-actions';
 
 import * as Api from './api';
 
-export const loadSuggestions =
-  createAction('LOAD_SUGGESTIONS', Api.getCountrySuggestion);
+export const loadSuggestions = createAction(
+  'LOAD_SUGGESTIONS',
+  input => {
+    return Api.getCountrySuggestion(input)
+      .then(({aggregations: {distinct_countries: {buckets}}}) => buckets);
+  }
+);
 
 export const clearSuggestions = createAction('CLEAR_SUGGESTIONS');
 

@@ -28,6 +28,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadData: (countries) => {
+      if (countries.size <= 0) {
+        return;
+      }
+
       dispatch(setIsFetching(true));
       Promise.all([
         dispatch(fetchStackedLineChartData({countries})),

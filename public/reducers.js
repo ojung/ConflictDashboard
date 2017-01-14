@@ -2,7 +2,7 @@ import {OrderedSet} from 'immutable';
 import {combineReducers} from 'redux';
 import {handleAction, handleActions} from 'redux-actions';
 
-import * as Actions from './actions';
+import * as Actions from './actions/';
 
 const isFetching = handleAction(
   Actions.setIsFetching,
@@ -31,7 +31,7 @@ const suggestions = handleActions({
 }, OrderedSet());
 
 const stackedChartData = handleAction(
-  Actions.fetchStackedLineData,
+  Actions.fetchStackedLineChartData,
   (state, {payload}) => payload,
   {labels: [], datasets: []}
 );

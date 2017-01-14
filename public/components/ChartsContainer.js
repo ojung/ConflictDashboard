@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 import {connect} from 'react-redux';
 
 import Charts from './Charts.jsx';
-import {fetchStackedLineData, setIsFetching} from '../actions';
+import {fetchStackedLineChartData, setIsFetching} from '../actions/index';
 
 const getCountries = ({countries}) => countries;
 
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
     loadData: (countries) => {
       dispatch(setIsFetching(true));
       Promise.all([
-        dispatch(fetchStackedLineData({countries})),
+        dispatch(fetchStackedLineChartData({countries})),
       ])
         .then(() => dispatch(setIsFetching(false)));
     }

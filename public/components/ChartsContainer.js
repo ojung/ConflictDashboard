@@ -1,6 +1,7 @@
+import Promise from 'bluebird';
 import {connect} from 'react-redux';
 
-import StackedChart from './StackedChart.jsx';
+import Charts from './Charts.jsx';
 import {fetchStackedLineData, setIsFetching} from '../actions';
 
 const getCountries = ({countries}) => countries;
@@ -11,7 +12,7 @@ const getIsFetching = ({isFetching}) => isFetching;
 
 const mapStateToProps = (state) => {
   return {
-    data: getStackedChartData(state),
+    stackedChartData: getStackedChartData(state),
     countries: getCountries(state),
     isFetching: getIsFetching(state),
   };
@@ -21,12 +22,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadData: (countries) => {
       dispatch(setIsFetching(true));
-      dispatch(fetchStackedLineData({countries}))
+      Promise.all([
+        dispatch(fetchStackedLineData({countries})),
+      ])
         .then(() => dispatch(setIsFetching(false)));
-    },
+    }
   };
 };
 
-const StackedChartContainer =
-  connect(mapStateToProps, mapDispatchToProps)(StackedChart);
-export default StackedChartContainer;
+const ChartsContainer =
+  connect(mapStateToProps, mapDispatchToProps)(Charts);
+export default ChartsContainer;

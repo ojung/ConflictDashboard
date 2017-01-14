@@ -4,7 +4,7 @@ import promiseMiddleware from 'redux-promise';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 
-import GridLayout from './components/GridLayout.jsx';
+import ChartsContainer from './components/ChartsContainer';
 import NavBarContainer from './components/FilterBarContainer';
 import rootReducer from './reducers';
 
@@ -13,7 +13,7 @@ const store = createStore(rootReducer, {}, applyMiddleware(promiseMiddleware));
 const RootComponent = () => (
   <div>
     <NavBarContainer />
-    <GridLayout />
+    <ChartsContainer />
   </div>
 );
 

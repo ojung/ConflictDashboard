@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import SelectedCountries from './SelectedCountries.jsx';
-import {removeCountry} from '../actions';
+import {removeCountry} from '../actions/';
 
 const mapStateToProps = ({countries}) => ({countries});
 

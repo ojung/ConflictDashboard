@@ -1,19 +1,11 @@
 import React, {PropTypes} from 'react';
-import {Line} from 'react-chartjs-2';
+import {Pie} from 'react-chartjs-2';
 import {OrderedSet} from 'immutable';
 
 const options = {
-  scales: {
-    yAxes: [{
-      stacked: true,
-    }],
-  },
-  legend: {
-    display: false,
-  }
 };
 
-class StackedChart extends React.Component {
+class DoughnutChart extends React.Component {
   render() {
     const {data, countries} = this.props;
     if (countries.size <= 0) {
@@ -21,18 +13,18 @@ class StackedChart extends React.Component {
     }
 
     return (
-      <Line
+      <Pie
         data={data}
         options={options}
-        height={100}
       />
     );
+
   }
 }
 
-StackedChart.propTypes = {
+DoughnutChart.propTypes = {
   data: PropTypes.object.isRequired,
   countries: PropTypes.instanceOf(OrderedSet).isRequired,
 };
 
-export default StackedChart;
+export default DoughnutChart;

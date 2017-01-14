@@ -5,7 +5,7 @@ import {
   loadSuggestions,
   addCountry,
   clearSuggestions,
-} from '../actions';
+} from '../actions/';
 
 const mapStateToProps = ({suggestions}) => {
   return {suggestions};

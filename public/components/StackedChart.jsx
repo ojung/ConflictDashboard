@@ -2,17 +2,15 @@ import React, {PropTypes} from 'react';
 import {Line} from 'react-chartjs-2';
 import {OrderedSet} from 'immutable';
 
-const options = () => {
-  return {
-    scales: {
-      yAxes: [{
-        stacked: true,
-      }],
-    },
-    legend: {
-      display: false,
-    }
-  };
+const options = {
+  scales: {
+    yAxes: [{
+      stacked: true,
+    }],
+  },
+  legend: {
+    display: false,
+  }
 };
 
 class StackedChart extends React.Component {
@@ -25,7 +23,7 @@ class StackedChart extends React.Component {
     return (
       <Line
         data={data}
-        options={options(data.datasets.length >= 2)}
+        options={options}
         height={100}
       />
     );

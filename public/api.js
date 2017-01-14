@@ -1,7 +1,12 @@
 import _ from 'lodash/fp';
 import elasticsearch from 'elasticsearch';
 
-const client = new elasticsearch.Client({ host: 'localhost:9200', log: 'info' }); export function getCountrySuggestion(input) {
+const client = new elasticsearch.Client({
+  host: 'localhost:9200',
+  log: 'info',
+});
+
+export function getCountrySuggestion(input) {
   return client.search({
     index: 'bundestag',
     body: {

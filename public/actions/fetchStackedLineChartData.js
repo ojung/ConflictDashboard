@@ -43,7 +43,7 @@ const getDataSet = (country, data) => {
   };
 };
 
-const fetchStackedLineChartData = createAction(
+export default createAction(
   'LOAD_STACKED_CHART_DATA',
   filters => {
     return getStackedChartData(filters)
@@ -54,4 +54,3 @@ const fetchStackedLineChartData = createAction(
       });
   }
 );
-export default fetchStackedLineChartData;

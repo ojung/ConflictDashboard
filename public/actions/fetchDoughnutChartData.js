@@ -3,7 +3,7 @@ import {createAction} from 'redux-actions';
 
 import {getDoughnutChartData} from '../api';
 
-const fetchDoughnutChartData = createAction(
+export default createAction(
   'LOAD_DOUGHNUT_CHART_DATA',
   filters => {
     return getDoughnutChartData(filters)
@@ -26,4 +26,3 @@ const fetchDoughnutChartData = createAction(
       });
   }
 );
-export default fetchDoughnutChartData;

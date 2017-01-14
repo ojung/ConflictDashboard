@@ -31,14 +31,13 @@ export function getCountrySuggestion(input) {
 }
 
 export function getStackedChartData({countries}) {
-  const shoulds = countries.map(country => ({match: {'country.keyword': country}}));
   return client.search({
     index: 'bundestag',
     body: {
       size: 0,
       query: {
         bool: {
-          should: shoulds.toJS(),
+          should: getShoulds(countries),
         }
       },
       aggs: {
@@ -68,3 +67,37 @@ export function getStackedChartData({countries}) {
   });
 }
 
+export function getDoughnutChartData({countries}) {
+  return client.search({
+    index: 'bundestag',
+    body: {
+      size: 0,
+      query: {
+        bool: {
+          should: getShoulds(countries),
+        }
+      },
+      aggs: {
+        resort: {
+          terms: {
+            field: 'type.keyword',
+            size: 500
+          },
+          aggs: {
+            sum: {
+              sum: {
+                field: 'amount'
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+function getShoulds(countries) {
+  return countries
+    .map(country => ({match: {'country.keyword': country}}))
+    .toJS();
+}

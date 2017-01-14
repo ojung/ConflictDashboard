@@ -2,17 +2,24 @@ import Promise from 'bluebird';
 import {connect} from 'react-redux';
 
 import Charts from './Charts.jsx';
-import {fetchStackedLineChartData, setIsFetching} from '../actions/index';
+import {
+  fetchStackedLineChartData,
+  setIsFetching,
+  fetchDoughnutChartData
+} from '../actions/index';
 
 const getCountries = ({countries}) => countries;
 
 const getStackedChartData = ({stackedChartData}) => stackedChartData;
+
+const getDoughnutChartData = ({doughnutChartData}) => doughnutChartData;
 
 const getIsFetching = ({isFetching}) => isFetching;
 
 const mapStateToProps = (state) => {
   return {
     stackedChartData: getStackedChartData(state),
+    doughnutChartData: getDoughnutChartData(state),
     countries: getCountries(state),
     isFetching: getIsFetching(state),
   };
@@ -24,6 +31,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setIsFetching(true));
       Promise.all([
         dispatch(fetchStackedLineChartData({countries})),
+        dispatch(fetchDoughnutChartData({countries})),
       ])
         .then(() => dispatch(setIsFetching(false)));
     }

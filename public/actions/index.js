@@ -1,9 +1,10 @@
 import {createAction, createActions} from 'redux-actions';
 
 import fetchStackedLineChartData from './fetchStackedLineChartData';
+import fetchDoughnutChartData from './fetchDoughnutChartData';
 import loadSuggestions from './loadSuggestions';
 
-export {fetchStackedLineChartData, loadSuggestions};
+export {fetchStackedLineChartData, loadSuggestions, fetchDoughnutChartData};
 
 export const clearSuggestions = createAction('CLEAR_SUGGESTIONS');
 

@@ -36,8 +36,15 @@ const stackedChartData = handleAction(
   {labels: [], datasets: []}
 );
 
+const doughnutChartData = handleAction(
+  Actions.fetchDoughnutChartData,
+  (state, {payload}) => payload,
+  {labels: [], datasets: []}
+);
+
 const rootReducer = combineReducers({
-  countries, types, resorts, suggestions, stackedChartData, isFetching
+  countries, types, resorts, suggestions, stackedChartData, isFetching,
+  doughnutChartData
 });
 
 export default rootReducer;

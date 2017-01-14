@@ -3,6 +3,7 @@ import _ from 'lodash/fp';
 import {Grid, Row, Col} from 'react-bootstrap';
 import {OrderedSet} from 'immutable';
 
+import DoughnutChart from './DoughnutChart.jsx';
 import SelectedCountriesContainer from './SelectedCountriesContainer';
 import StackedChart from './StackedChart.jsx';
 
@@ -25,7 +26,7 @@ class Charts extends React.Component {
   }
 
   render() {
-    const {countries, stackedChartData} = this.props;
+    const {countries, stackedChartData, doughnutChartData} = this.props;
     return (
       <Grid>
         <Row>
@@ -36,6 +37,11 @@ class Charts extends React.Component {
         <Row>
           <Col xs={12} md={12}>
             <StackedChart data={stackedChartData} countries={countries} />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={6} md={6}>
+            <DoughnutChart data={doughnutChartData} countries={countries} />
           </Col>
         </Row>
       </Grid>

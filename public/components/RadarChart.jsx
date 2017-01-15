@@ -5,6 +5,19 @@ import {List, OrderedSet} from 'immutable';
 import {Radar} from 'react-chartjs-2';
 
 const options = {
+  legend: {
+    display: false,
+  },
+  scale: {
+    ticks: {
+      callback: label => label.toLocaleString(),
+      maxTicksLimit: 5,
+    },
+    scaleLabel: {
+      display: true,
+      labelString: 'in Euro'
+    }
+  },
   tooltips: {
     callbacks: {
       label: ({index}, {datasets, labels}) => {
@@ -32,6 +45,9 @@ const getChartJsDatasets = (datasets, countries) => {
     .map(datum => {
       const correspondingCountry = countries
         .find(({name}) => name === datum.label);
+      if (!correspondingCountry) {
+        return {};
+      }
       return _.assignAll([{}, getPolarConfig(correspondingCountry), datum]);
     })
     .toJS();

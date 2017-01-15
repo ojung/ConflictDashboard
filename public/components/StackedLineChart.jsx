@@ -33,13 +33,13 @@ const options = {
 
 const getLineConfig = (country) => {
   const color = tinycolor(country.color);
-  const brightColor = color.clone().setAlpha(0.4);
+  const brightColor = color.clone().lighten();
   return {
     fill: true,
     lineTension: 0.1,
     backgroundColor: brightColor.toPercentageRgbString(),
     borderColor: color.toPercentageRgbString(),
-    pointHoverBackgroundColor: color.toPercentageRgbString(),
+    pointHoverBackgroundColor: brightColor.toPercentageRgbString(),
     pointBorderColor: color.toPercentageRgbString(),
     borderCapStyle: 'butt',
     borderDash: [],
@@ -50,7 +50,7 @@ const getLineConfig = (country) => {
     pointHoverRadius: 5,
     pointHoverBorderColor: 'rgba(220,220,220,1)',
     pointHoverBorderWidth: 2,
-    pointRadius: 1,
+    pointRadius: 2,
     pointHitRadius: 10,
     spanGaps: false,
   };
@@ -61,6 +61,9 @@ const getChartJsDatasets = (datasets, countries) => {
     .map(datum => {
       const correspondingCountry = countries
         .find(({name}) => name === datum.label);
+      if (!correspondingCountry) {
+        return {};
+      }
       return _.assignAll([{}, getLineConfig(correspondingCountry), datum]);
     })
     .toJS();

@@ -1,8 +1,16 @@
 import React, {PropTypes} from 'react';
-import {Pie} from 'react-chartjs-2';
+import {Doughnut} from 'react-chartjs-2';
 import {OrderedSet} from 'immutable';
 
 const options = {
+  tooltips: {
+    callbacks: {
+      label: ({index}, {datasets, labels}) => {
+        return labels[index] + ': '
+          + datasets[0].data[index].toLocaleString() + ' Euro';
+      }
+    }
+  }
 };
 
 class DoughnutChart extends React.Component {
@@ -13,9 +21,10 @@ class DoughnutChart extends React.Component {
     }
 
     return (
-      <Pie
+      <Doughnut
         data={data}
         options={options}
+        redraw
       />
     );
 

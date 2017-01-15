@@ -1,4 +1,4 @@
-import {OrderedSet} from 'immutable';
+import {List, OrderedSet} from 'immutable';
 import {combineReducers} from 'redux';
 import {handleAction, handleActions} from 'redux-actions';
 
@@ -20,20 +20,27 @@ const types = handleActions({
   [Actions.removeType]: (state, {payload: type}) => state.remove(type),
 }, OrderedSet());
 
-const resorts = handleActions({
-  [Actions.addResort]: (state, {payload: resort}) => state.add(resort),
-  [Actions.removeResort]: (state, {payload: resort}) => state.remove(resort),
-}, OrderedSet());
-
 const suggestions = handleActions({
   [Actions.loadSuggestions]: (state, {payload}) => OrderedSet(payload),
   [Actions.clearSuggestions]: () => OrderedSet(),
 }, OrderedSet());
 
-const stackedChartData = handleAction(
-  Actions.fetchStackedLineChartData,
+const resorts = handleAction(
+  Actions.fetchResorts,
   (state, {payload}) => payload,
-  {labels: [], datasets: []}
+  OrderedSet()
+);
+
+const years = handleAction(
+  Actions.fetchYears,
+  (state, {payload}) => payload,
+  OrderedSet()
+);
+
+const stackedChartDatasets = handleAction(
+  Actions.fetchStackedLineChartDatasets,
+  (state, {payload}) => payload,
+  List()
 );
 
 const doughnutChartData = handleAction(
@@ -42,9 +49,15 @@ const doughnutChartData = handleAction(
   {labels: [], datasets: []}
 );
 
+const radarChartDatasets = handleAction(
+  Actions.fetchRadarChartDatasets,
+  (state, {payload}) => payload,
+  List()
+);
+
 const rootReducer = combineReducers({
-  countries, types, resorts, suggestions, stackedChartData, isFetching,
-  doughnutChartData
+  countries, types, resorts, suggestions, stackedChartDatasets, isFetching,
+  doughnutChartData, years, radarChartDatasets
 });
 
 export default rootReducer;

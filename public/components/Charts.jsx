@@ -4,7 +4,6 @@ import {List, OrderedSet} from 'immutable';
 
 import DoughnutChart from './DoughnutChart.jsx';
 import RadarChart from './RadarChart.jsx';
-import SelectedCountriesContainer from './SelectedCountriesContainer';
 import StackedLineChart from './StackedLineChart.jsx';
 
 class Charts extends React.Component {
@@ -45,11 +44,6 @@ class Charts extends React.Component {
     } = this.props;
     return (
       <Grid>
-        <Row>
-          <Col xs={12} md={12} style={{margin: 15, paddingLeft: 60}}>
-            <SelectedCountriesContainer />
-          </Col>
-        </Row>
         <Row>
           <Col xs={12} md={12}>
             <StackedLineChart

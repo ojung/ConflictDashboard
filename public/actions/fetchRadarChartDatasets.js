@@ -4,11 +4,6 @@ import {createAction} from 'redux-actions';
 
 import {getRadarChartDatasets} from '../api';
 
-const peek = (data) => {
-  console.log(data);
-  return data;
-};
-
 const extractDataSets = (buckets, countries, resorts) => {
   const getDataForEachCountry = country => {
     const {resorts: {buckets: resortBucketForCountry}} =
@@ -35,7 +30,6 @@ const extractDataSets = (buckets, countries, resorts) => {
     const data = _.flow([
       _.get(country),
       _.values,
-      peek,
     ])(sumByCountryByResort);
     return {label: country, data};
   })(countries);
@@ -50,7 +44,7 @@ export default createAction(
       .then(({aggregations: {countries: {buckets}}}) => {
         const datasets = extractDataSets(
           buckets,
-          countries.toJS(),
+          countries.map(({name}) => name).toJS(),
           resorts.toJS()
         );
         return List(datasets);

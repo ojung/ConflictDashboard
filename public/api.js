@@ -175,6 +175,6 @@ export function getDoughnutChartData({countries}) {
 
 function getShoulds(countries) {
   return countries
-    .map(country => ({match: {'country.keyword': country}}))
+    .map(({name}) => ({match: {'country.keyword': name}}))
     .toJS();
 }

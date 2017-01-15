@@ -13,6 +13,7 @@
     "accounting": "^0.4.1",
     "bluebird": "^3.4.7",
     "chart.js": "^2.4.0",
+    "color-scheme": "0.0.5",
     "elasticsearch": "^11.0.1",
     "immutable": "^3.8.1",
     "lodash": "^4.16.4",
@@ -27,7 +28,8 @@
     "redux": "^3.6.0",
     "redux-actions": "^1.2.0",
     "redux-promise": "^0.5.3",
-    "reselect": "^2.5.4"
+    "reselect": "^2.5.4",
+    "tinycolor2": "^1.4.1"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

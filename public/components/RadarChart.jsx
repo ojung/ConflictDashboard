@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import _ from 'lodash/fp';
+import tinycolor from 'tinycolor2';
 import {List, OrderedSet} from 'immutable';
 import {Radar} from 'react-chartjs-2';
 
@@ -14,18 +15,25 @@ const options = {
   }
 };
 
-const polarConfig = {
-  backgroundColor: 'rgba(179,181,198,0.2)',
-  borderColor: 'rgba(179,181,198,1)',
-  pointBackgroundColor: 'rgba(179,181,198,1)',
-  pointBorderColor: '#fff',
-  pointHoverBackgroundColor: '#fff',
-  pointHoverBorderColor: 'rgba(179,181,198,1)',
+const getPolarConfig = (country) => {
+  const color = tinycolor(country.color);
+  const brightColor = color.clone().setAlpha(0.4);
+  return {
+    backgroundColor: brightColor.toPercentageRgbString(),
+    borderColor: color.toPercentageRgbString(),
+    pointHoverBackgroundColor: color.toPercentageRgbString(),
+    pointBorderColor: color.toPercentageRgbString(),
+    pointHoverBorderColor: 'rgba(220,220,220,1)',
+  };
 };
 
-const getChartJsDatasets = datasets => {
+const getChartJsDatasets = (datasets, countries) => {
   return datasets
-    .map(datum => _.assignAll([{}, polarConfig, datum]))
+    .map(datum => {
+      const correspondingCountry = countries
+        .find(({name}) => name === datum.label);
+      return _.assignAll([{}, getPolarConfig(correspondingCountry), datum]);
+    })
     .toJS();
 };
 
@@ -40,7 +48,7 @@ class RadarChart extends React.Component {
       <Radar
         data={{
           labels: resorts.toJS(),
-          datasets: getChartJsDatasets(datasets),
+          datasets: getChartJsDatasets(datasets, countries),
         }}
         options={options}
         redraw

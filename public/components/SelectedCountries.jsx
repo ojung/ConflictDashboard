@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import tinycolor from 'tinycolor2';
 import {Label, Glyphicon} from 'react-bootstrap';
 import {OrderedSet} from 'immutable';
 
@@ -9,16 +10,22 @@ const SelectedCountries = ({countries, removeCountry}) => {
   return (
     <div>
       {countries
-          .map(country => (
-            <Label
-              style={{margin: 1}}
-              key={country}
-              onClick={() => removeCountry(country)}
-            >
-              {country}
-              <Glyphicon glyph="remove" />
-            </Label>
-          ))
+          .map(country => {
+            const color = tinycolor(country.color);
+            return (
+              <Label
+                style={{
+                  color: color.isLight() ? '#000' : '#fff',
+                  margin: 2,
+                  backgroundColor: '#' + country.color,
+                }}
+                key={country.name}
+                onClick={() => removeCountry(country)}
+              >
+                {country.name}
+                <Glyphicon glyph="remove" />
+              </Label>);
+          })
       }
     </div>
   );

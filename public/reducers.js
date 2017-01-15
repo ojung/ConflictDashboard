@@ -11,7 +11,12 @@ const isFetching = handleAction(
 );
 
 const countries = handleActions({
-  [Actions.addCountry]: (state, {payload: country}) => state.add(country),
+  [Actions.addCountry]: (state, {payload: country}) => {
+    if (state.find(existingCountry => existingCountry.name === country.name)) {
+      return state;
+    }
+    return state.add(country);
+  },
   [Actions.removeCountry]: (state, {payload: country}) => state.remove(country),
 }, OrderedSet());
 

@@ -5,6 +5,63 @@ const client = new elasticsearch.Client({
   log: 'info',
 });
 
+export function getRadarChartDatasets({countries}) {
+  return client.search({
+    index: 'bundestag',
+    body: {
+      size: 0,
+      query: {
+        bool: {
+          should: getShoulds(countries)
+        }
+      },
+      aggs: {
+        countries: {
+          terms: {
+            field: 'country.keyword',
+            size: 500
+          },
+          aggs: {
+            resorts: {
+              terms: {
+                field: 'resort.keyword',
+                size: 500
+              },
+              aggs: {
+                sum: {
+                  sum: {
+                    field: 'amount'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+export function getResorts() {
+  return client.search({
+    index: 'bundestag',
+    body: {
+      size: 0,
+      query: {
+        match_all: {}
+      },
+      aggs: {
+        resorts: {
+          terms: {
+            field: 'resort.keyword',
+            size: 500
+          }
+        }
+      }
+    }
+  });
+}
+
 export function getYears() {
   return client.search({
     index: 'bundestag',

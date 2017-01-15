@@ -1,15 +1,19 @@
 import {createAction, createActions} from 'redux-actions';
 
 import fetchStackedLineChartDatasets from './fetchStackedLineChartDatasets';
+import fetchRadarChartDatasets from './fetchRadarChartDatasets';
 import fetchDoughnutChartData from './fetchDoughnutChartData';
 import loadSuggestions from './loadSuggestions';
 import fetchYears from './fetchYears';
+import fetchResorts from './fetchResorts';
 
 export {
   fetchStackedLineChartDatasets,
+  fetchRadarChartDatasets,
   loadSuggestions,
   fetchDoughnutChartData,
-  fetchYears
+  fetchYears,
+  fetchResorts,
 };
 
 export const clearSuggestions = createAction('CLEAR_SUGGESTIONS');

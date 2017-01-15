@@ -3,14 +3,15 @@ import {Grid, Row, Col} from 'react-bootstrap';
 import {List, OrderedSet} from 'immutable';
 
 import DoughnutChart from './DoughnutChart.jsx';
+import RadarChart from './RadarChart.jsx';
 import SelectedCountriesContainer from './SelectedCountriesContainer';
 import StackedLineChart from './StackedLineChart.jsx';
 
 class Charts extends React.Component {
   componentWillMount() {
-    const {years, loadYears} = this.props;
-    if (years.isEmpty()) {
-      loadYears();
+    const {years, resorts, loadStaticData} = this.props;
+    if (years.isEmpty() || resorts.isEmpty()) {
+      loadStaticData();
       return null;
     }
     this.loadIfNecessary(this.props);
@@ -26,9 +27,10 @@ class Charts extends React.Component {
     loadData,
     isFetching,
     years,
+    resorts,
   }) {
     if (!isFetching && stackedChartDatasets.size !== countries.size) {
-      loadData(countries, years);
+      loadData(countries, years, resorts);
     }
   }
 
@@ -36,7 +38,9 @@ class Charts extends React.Component {
     const {
       countries,
       years,
+      resorts,
       stackedChartDatasets,
+      radarChartDatasets,
       doughnutChartData
     } = this.props;
     return (
@@ -59,6 +63,13 @@ class Charts extends React.Component {
           <Col xs={6} md={6}>
             <DoughnutChart data={doughnutChartData} countries={countries} />
           </Col>
+          <Col xs={6} md={6}>
+            <RadarChart
+              countries={countries}
+              resorts={resorts}
+              datasets={radarChartDatasets}
+            />
+          </Col>
         </Row>
       </Grid>
     );
@@ -70,7 +81,7 @@ Charts.propTypes = {
   stackedChartDatasets: PropTypes.instanceOf(List).isRequired,
   years: PropTypes.instanceOf(OrderedSet).isRequired,
   doughnutChartData: PropTypes.object.isRequired,
-  loadYears: PropTypes.func.isRequired,
+  loadStaticData: PropTypes.func.isRequired,
 };
 
 export default Charts;

@@ -64,15 +64,15 @@ class StackedLineChart extends React.Component {
       return null;
     }
 
-    const newObject = _.assign({}, {
-      labels: years.toJS(),
-      datasets: getChartJsDatasets(datasets),
-    });
     return (
       <Line
-        data={newObject}
+        data={{
+          labels: years.toJS(),
+          datasets: getChartJsDatasets(datasets),
+        }}
         options={options}
         height={100}
+        redraw
       />
     );
   }

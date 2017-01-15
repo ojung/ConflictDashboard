@@ -20,15 +20,16 @@ const types = handleActions({
   [Actions.removeType]: (state, {payload: type}) => state.remove(type),
 }, OrderedSet());
 
-const resorts = handleActions({
-  [Actions.addResort]: (state, {payload: resort}) => state.add(resort),
-  [Actions.removeResort]: (state, {payload: resort}) => state.remove(resort),
-}, OrderedSet());
-
 const suggestions = handleActions({
   [Actions.loadSuggestions]: (state, {payload}) => OrderedSet(payload),
   [Actions.clearSuggestions]: () => OrderedSet(),
 }, OrderedSet());
+
+const resorts = handleAction(
+  Actions.fetchResorts,
+  (state, {payload}) => payload,
+  OrderedSet()
+);
 
 const years = handleAction(
   Actions.fetchYears,
@@ -48,9 +49,15 @@ const doughnutChartData = handleAction(
   {labels: [], datasets: []}
 );
 
+const radarChartDatasets = handleAction(
+  Actions.fetchRadarChartDatasets,
+  (state, {payload}) => payload,
+  List()
+);
+
 const rootReducer = combineReducers({
   countries, types, resorts, suggestions, stackedChartDatasets, isFetching,
-  doughnutChartData, years
+  doughnutChartData, years, radarChartDatasets
 });
 
 export default rootReducer;

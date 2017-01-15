@@ -5,6 +5,26 @@ const client = new elasticsearch.Client({
   log: 'info',
 });
 
+export function getYears() {
+  return client.search({
+    index: 'bundestag',
+    body: {
+      size: 0,
+      query: {
+        match_all: {}
+      },
+      aggs: {
+        years: {
+          terms: {
+            field: 'year',
+            size: 500
+          }
+        }
+      }
+    }
+  });
+}
+
 export function getCountrySuggestion(input) {
   return client.search({
     index: 'bundestag',
@@ -30,7 +50,7 @@ export function getCountrySuggestion(input) {
   });
 }
 
-export function getStackedChartData({countries}) {
+export function getStackedChartDatasets({countries}) {
   return client.search({
     index: 'bundestag',
     body: {

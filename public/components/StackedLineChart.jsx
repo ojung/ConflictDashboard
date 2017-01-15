@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import _ from 'lodash/fp';
 import {Line} from 'react-chartjs-2';
-import {OrderedSet} from 'immutable';
+import {List, OrderedSet} from 'immutable';
 
 const options = {
   scales: {
@@ -51,20 +51,26 @@ const lineConfig = {
   spanGaps: false,
 };
 
-class StackedChart extends React.Component {
+const getChartJsDatasets = datasets => {
+  return datasets
+    .map(datum => _.assignAll([{}, lineConfig, datum]))
+    .toJS();
+};
+
+class StackedLineChart extends React.Component {
   render() {
-    const {data, countries} = this.props;
-    if (countries.isEmpty() || _.isEmpty(data.datasets)) {
+    const {years, datasets, countries} = this.props;
+    if (countries.isEmpty() || datasets.isEmpty()) {
       return null;
     }
 
-    const datasets = _.map(
-      datum => _.assignAll([{}, lineConfig, datum])
-    )(data.datasets);
-
+    const newObject = _.assign({}, {
+      labels: years.toJS(),
+      datasets: getChartJsDatasets(datasets),
+    });
     return (
       <Line
-        data={{labels: data.labels, datasets}}
+        data={newObject}
         options={options}
         height={100}
       />
@@ -72,9 +78,10 @@ class StackedChart extends React.Component {
   }
 }
 
-StackedChart.propTypes = {
-  data: PropTypes.object.isRequired,
+StackedLineChart.propTypes = {
+  years: PropTypes.instanceOf(OrderedSet).isRequired,
+  datasets: PropTypes.instanceOf(List).isRequired,
   countries: PropTypes.instanceOf(OrderedSet).isRequired,
 };
 
-export default StackedChart;
+export default StackedLineChart;

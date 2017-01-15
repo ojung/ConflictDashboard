@@ -3,38 +3,47 @@ import {connect} from 'react-redux';
 
 import Charts from './Charts.jsx';
 import {
-  fetchStackedLineChartData,
+  fetchStackedLineChartDatasets,
   setIsFetching,
-  fetchDoughnutChartData
+  fetchDoughnutChartData,
+  fetchYears,
 } from '../actions/index';
 
 const getCountries = ({countries}) => countries;
 
-const getStackedChartData = ({stackedChartData}) => stackedChartData;
+const getStackedChartDatasets = ({stackedChartDatasets}) => stackedChartDatasets;
 
 const getDoughnutChartData = ({doughnutChartData}) => doughnutChartData;
 
 const getIsFetching = ({isFetching}) => isFetching;
 
+const getYears = ({years}) => years;
+
 const mapStateToProps = (state) => {
   return {
-    stackedChartData: getStackedChartData(state),
+    stackedChartDatasets: getStackedChartDatasets(state),
     doughnutChartData: getDoughnutChartData(state),
     countries: getCountries(state),
+    years: getYears(state),
     isFetching: getIsFetching(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadData: (countries) => {
+    loadYears: () => {
+      dispatch(setIsFetching(true));
+      dispatch(fetchYears())
+        .then(() => dispatch(setIsFetching(false)));
+    },
+    loadData: (countries, years) => {
       if (countries.size <= 0) {
         return;
       }
 
       dispatch(setIsFetching(true));
       Promise.all([
-        dispatch(fetchStackedLineChartData({countries})),
+        dispatch(fetchStackedLineChartDatasets({years, countries})),
         dispatch(fetchDoughnutChartData({countries})),
       ])
         .then(() => dispatch(setIsFetching(false)));

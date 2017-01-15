@@ -1,23 +1,10 @@
 import _ from 'lodash/fp';
+import {List} from 'immutable';
 import {createAction} from 'redux-actions';
 
-import {getStackedChartData} from '../api';
+import {getStackedChartDatasets} from '../api';
 
-const YEARS = [
-  '2004',
-  '2005',
-  '2006',
-  '2007',
-  '2008',
-  '2009',
-  '2010',
-  '2011',
-  '2012',
-  '2013',
-  '2014',
-];
-
-const extractDataSets = (buckets, countries) => {
+const extractDataSets = (buckets, countries, years) => {
   const getCountrySumsForYear = year => {
     const bucketForYear = _.find({key_as_string: year})(buckets);
     return _.map(country => {
@@ -36,9 +23,9 @@ const extractDataSets = (buckets, countries) => {
   const sumByYearByCountry = _.flow([
     _.map(getCountrySumsForYear),
     _.map(_.fromPairs),
-    _.zip(YEARS),
+    _.zip(years),
     _.fromPairs,
-  ])(YEARS);
+  ])(years);
 
   const sumsByCountry = _.map(country => {
     const data = _.flow([
@@ -53,11 +40,11 @@ const extractDataSets = (buckets, countries) => {
 
 export default createAction(
   'LOAD_STACKED_CHART_DATA',
-  filters => {
-    return getStackedChartData(filters)
+  ({years, countries}) => {
+    return getStackedChartDatasets({countries})
       .then(({aggregations: {histogram: {buckets}}}) => {
-        const datasets = extractDataSets(buckets, filters.countries.toJS());
-        return {labels: YEARS, datasets};
+        const datasets = extractDataSets(buckets, countries.toJS(), years.toJS());
+        return List(datasets);
       });
   }
 );

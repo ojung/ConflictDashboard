@@ -43,19 +43,19 @@ const suggestions = handleActions({
 
 const resorts = handleAction(
   Actions.fetchResorts,
-  (state, {payload}) => payload,
+  getReducerMap('fetchResorts'),
   OrderedSet()
 );
 
 const years = handleAction(
   Actions.fetchYears,
-  (state, {payload}) => payload,
+  getReducerMap('fetchYears'),
   OrderedSet()
 );
 
 const stackedChartDatasets = handleAction(
   Actions.fetchStackedLineChartDatasets,
-  (state, {payload}) => payload,
+  getReducerMap('fetchStackedLineChartDatasets'),
   List()
 );
 
@@ -67,7 +67,7 @@ const doughnutChartDatasets = handleAction(
 
 const radarChartDatasets = handleAction(
   Actions.fetchRadarChartDatasets,
-  (state, {payload}) => payload,
+  getReducerMap('fetchRadarChartDatasets'),
   List()
 );
 

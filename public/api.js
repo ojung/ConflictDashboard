@@ -62,6 +62,26 @@ export function getResorts() {
   });
 }
 
+export function getTypes() {
+  return client.search({
+    index: 'bundestag',
+    body: {
+      size: 0,
+      query: {
+        match_all: {}
+      },
+      aggs: {
+        types: {
+          terms: {
+            field: 'type.keyword',
+            size: 500
+          }
+        }
+      }
+    }
+  });
+}
+
 export function getYears() {
   return client.search({
     index: 'bundestag',
@@ -155,7 +175,7 @@ export function getDoughnutChartData({countries}) {
         }
       },
       aggs: {
-        resort: {
+        type: {
           terms: {
             field: 'type.keyword',
             size: 500

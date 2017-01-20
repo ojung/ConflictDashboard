@@ -4,6 +4,16 @@ import {handleAction, handleActions} from 'redux-actions';
 
 import * as Actions from './actions/';
 
+const getReducerMap = (name) => ({
+  next: (state, {payload}) => {
+    return payload;
+  },
+  throw: (state, {payload}) => {
+    console.error('Got an error trying to ' + name + '.', payload);
+    return state;
+  }
+});
+
 const isFetching = handleAction(
   Actions.setIsFetching,
   (state, {payload: isFetching}) => isFetching,
@@ -20,10 +30,11 @@ const countries = handleActions({
   [Actions.removeCountry]: (state, {payload: country}) => state.remove(country),
 }, OrderedSet());
 
-const types = handleActions({
-  [Actions.addType]: (state, {payload: type}) => state.add(type),
-  [Actions.removeType]: (state, {payload: type}) => state.remove(type),
-}, OrderedSet());
+const types = handleAction(
+  Actions.fetchTypes,
+  getReducerMap('fetchTypes'),
+  OrderedSet()
+);
 
 const suggestions = handleActions({
   [Actions.loadSuggestions]: (state, {payload}) => OrderedSet(payload),
@@ -48,10 +59,10 @@ const stackedChartDatasets = handleAction(
   List()
 );
 
-const doughnutChartData = handleAction(
-  Actions.fetchDoughnutChartData,
-  (state, {payload}) => payload,
-  {labels: [], datasets: []}
+const doughnutChartDatasets = handleAction(
+  Actions.fetchDoughnutChartDatasets,
+  getReducerMap('fetchDoughnutChartDatasets'),
+  List()
 );
 
 const radarChartDatasets = handleAction(
@@ -62,7 +73,7 @@ const radarChartDatasets = handleAction(
 
 const rootReducer = combineReducers({
   countries, types, resorts, suggestions, stackedChartDatasets, isFetching,
-  doughnutChartData, years, radarChartDatasets
+  doughnutChartDatasets, years, radarChartDatasets
 });
 
 export default rootReducer;

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Doughnut} from 'react-chartjs-2';
-import {OrderedSet} from 'immutable';
+import {List, OrderedSet} from 'immutable';
 
 const options = {
   tooltips: {
@@ -15,14 +15,26 @@ const options = {
 
 class DoughnutChart extends React.Component {
   render() {
-    const {data, countries} = this.props;
-    if (countries.size <= 0) {
+    const {types, datasets, countries} = this.props;
+    if (countries.isEmpty() || datasets.isEmpty()) {
       return null;
     }
 
+    const myDatasets = [{
+      data: datasets.toJS(),
+      backgroundColor: [
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
+      ],
+    }];
+
     return (
       <Doughnut
-        data={data}
+        data={{
+          labels: types.toJS(),
+          datasets: myDatasets,
+        }}
         options={options}
         redraw
       />
@@ -32,7 +44,8 @@ class DoughnutChart extends React.Component {
 }
 
 DoughnutChart.propTypes = {
-  data: PropTypes.object.isRequired,
+  datasets: PropTypes.instanceOf(List).isRequired,
+  types: PropTypes.instanceOf(OrderedSet).isRequired,
   countries: PropTypes.instanceOf(OrderedSet).isRequired,
 };
 

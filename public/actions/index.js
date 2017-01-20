@@ -2,9 +2,10 @@ import {createAction, createActions} from 'redux-actions';
 
 import fetchStackedLineChartDatasets from './fetchStackedLineChartDatasets';
 import fetchRadarChartDatasets from './fetchRadarChartDatasets';
-import fetchDoughnutChartData from './fetchDoughnutChartData';
+import fetchDoughnutChartDatasets from './fetchDoughnutChartDatasets';
 import loadSuggestions from './loadSuggestions';
 import fetchYears from './fetchYears';
+import fetchTypes from './fetchTypes';
 import fetchResorts from './fetchResorts';
 import {addCountry, removeCountry} from './countries';
 
@@ -12,8 +13,9 @@ export {
   fetchStackedLineChartDatasets,
   fetchRadarChartDatasets,
   loadSuggestions,
-  fetchDoughnutChartData,
+  fetchDoughnutChartDatasets,
   fetchYears,
+  fetchTypes,
   fetchResorts,
   addCountry,
   removeCountry,

@@ -8,8 +8,8 @@ import StackedLineChart from './StackedLineChart.jsx';
 
 class Charts extends React.Component {
   componentWillMount() {
-    const {years, resorts, loadStaticData} = this.props;
-    if (years.isEmpty() || resorts.isEmpty()) {
+    const {years, resorts, types, loadStaticData} = this.props;
+    if (years.isEmpty() || resorts.isEmpty() || types.isEmpty()) {
       loadStaticData();
       return null;
     }
@@ -27,9 +27,10 @@ class Charts extends React.Component {
     isFetching,
     years,
     resorts,
+    types,
   }) {
     if (!isFetching && stackedChartDatasets.size !== countries.size) {
-      loadData(countries, years, resorts);
+      loadData(countries, years, resorts, types);
     }
   }
 
@@ -38,9 +39,10 @@ class Charts extends React.Component {
       countries,
       years,
       resorts,
+      types,
       stackedChartDatasets,
       radarChartDatasets,
-      doughnutChartData
+      doughnutChartDatasets,
     } = this.props;
     return (
       <Grid>
@@ -55,7 +57,11 @@ class Charts extends React.Component {
         </Row>
         <Row>
           <Col xs={6} md={6}>
-            <DoughnutChart data={doughnutChartData} countries={countries} />
+            <DoughnutChart
+              datasets={doughnutChartDatasets}
+              countries={countries}
+              types={types}
+            />
           </Col>
           <Col xs={6} md={6}>
             <RadarChart
@@ -74,7 +80,8 @@ Charts.propTypes = {
   countries: PropTypes.instanceOf(OrderedSet).isRequired,
   stackedChartDatasets: PropTypes.instanceOf(List).isRequired,
   years: PropTypes.instanceOf(OrderedSet).isRequired,
-  doughnutChartData: PropTypes.object.isRequired,
+  doughnutChartDatasets: PropTypes.instanceOf(List).isRequired,
+  radarChartDatasets: PropTypes.instanceOf(List).isRequired,
   loadStaticData: PropTypes.func.isRequired,
 };
 

@@ -6,16 +6,18 @@ import {
   fetchStackedLineChartDatasets,
   fetchRadarChartDatasets,
   setIsFetching,
-  fetchDoughnutChartData,
+  fetchDoughnutChartDatasets,
   fetchYears,
   fetchResorts,
+  fetchTypes,
 } from '../actions/index';
 
 const getCountries = ({countries}) => countries;
 
 const getStackedChartDatasets = ({stackedChartDatasets}) => stackedChartDatasets;
 
-const getDoughnutChartData = ({doughnutChartData}) => doughnutChartData;
+const getDoughnutChartDatasets =
+  ({doughnutChartDatasets}) => doughnutChartDatasets;
 
 const getIsFetching = ({isFetching}) => isFetching;
 
@@ -23,14 +25,17 @@ const getYears = ({years}) => years;
 
 const getResorts = ({resorts}) => resorts;
 
+const getTypes = ({types}) => types;
+
 const getRadarChartDatasets = ({radarChartDatasets}) => radarChartDatasets;
 
 const mapStateToProps = (state) => {
   return {
     stackedChartDatasets: getStackedChartDatasets(state),
-    doughnutChartData: getDoughnutChartData(state),
+    doughnutChartDatasets: getDoughnutChartDatasets(state),
     countries: getCountries(state),
     years: getYears(state),
+    types: getTypes(state),
     resorts: getResorts(state),
     isFetching: getIsFetching(state),
     radarChartDatasets: getRadarChartDatasets(state),
@@ -44,10 +49,11 @@ const mapDispatchToProps = (dispatch) => {
       Promise.all([
         dispatch(fetchYears()),
         dispatch(fetchResorts()),
+        dispatch(fetchTypes()),
       ])
         .then(() => dispatch(setIsFetching(false)));
     },
-    loadData: (countries, years, resorts) => {
+    loadData: (countries, years, resorts, types) => {
       if (countries.size <= 0) {
         return;
       }
@@ -55,7 +61,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setIsFetching(true));
       Promise.all([
         dispatch(fetchStackedLineChartDatasets({years, countries})),
-        dispatch(fetchDoughnutChartData({countries})),
+        dispatch(fetchDoughnutChartDatasets({types, countries})),
         dispatch(fetchRadarChartDatasets({resorts, countries})),
       ])
         .then(() => dispatch(setIsFetching(false)));

@@ -1,3 +1,4 @@
+import Immutable from 'immutable';
 import React, {PropTypes} from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 import {List, OrderedSet} from 'immutable';
@@ -32,6 +33,35 @@ class Charts extends React.Component {
     if (!isFetching && stackedChartDatasets.size !== countries.size) {
       loadData(countries, years, resorts, types);
     }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {
+      countries,
+      years,
+      resorts,
+      types,
+      stackedChartDatasets,
+      radarChartDatasets,
+      doughnutChartDatasets
+    } = this.props;
+    const {
+      countries: nextCountries,
+      years: nextYears,
+      resorts: nextResorts,
+      types: nextTypes,
+      stackedChartDatasets: nextStackedChartDatasets,
+      radarChartDatasets: nextRadarChartDatasets,
+      doughnutChartDatasets: nextDoughnutChartDatasets
+    } = nextProps;
+
+    return !Immutable.is(countries, nextCountries) ||
+      !Immutable.is(years, nextYears) ||
+      !Immutable.is(resorts, nextResorts) ||
+      !Immutable.is(types, nextTypes) ||
+      !Immutable.is(stackedChartDatasets, nextStackedChartDatasets) ||
+      !Immutable.is(radarChartDatasets, nextRadarChartDatasets) ||
+      !Immutable.is(doughnutChartDatasets, nextDoughnutChartDatasets);
   }
 
   render() {

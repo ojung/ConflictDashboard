@@ -41,7 +41,7 @@ const FilterBar = ({
                 href="#"
               >
                 {country.name}
-                <Glyphicon glyph="remove" />
+                <Glyphicon glyph="remove" style={{paddingLeft: 5}} />
               </Label>
             );
           })

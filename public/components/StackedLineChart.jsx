@@ -69,26 +69,22 @@ const getChartJsDatasets = (datasets, countries) => {
     .toJS();
 };
 
-class StackedLineChart extends React.Component {
-  render() {
-    const {years, datasets, countries} = this.props;
-    if (countries.isEmpty() || datasets.isEmpty()) {
-      return null;
-    }
-
-    return (
-      <Line
-        data={{
-          labels: years.toJS(),
-          datasets: getChartJsDatasets(datasets, countries),
-        }}
-        options={options}
-        height={100}
-        redraw
-      />
-    );
+const StackedLineChart = ({years, datasets, countries}) => {
+  if (countries.isEmpty() || datasets.isEmpty()) {
+    return null;
   }
-}
+  return (
+    <Line
+      data={{
+        labels: years.toJS(),
+        datasets: getChartJsDatasets(datasets, countries),
+      }}
+      options={options}
+      height={100}
+      redraw
+    />
+  );
+};
 
 StackedLineChart.propTypes = {
   years: PropTypes.instanceOf(OrderedSet).isRequired,

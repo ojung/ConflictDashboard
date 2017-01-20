@@ -5,10 +5,11 @@ import {
   loadSuggestions,
   addCountry,
   clearSuggestions,
+  removeCountry,
 } from '../actions/';
 
-const mapStateToProps = ({suggestions}) => {
-  return {suggestions};
+const mapStateToProps = ({suggestions, countries}) => {
+  return {suggestions, countries};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -26,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(addCountry(String(value)));
       }
     },
+    removeCountry: (country) => dispatch(removeCountry(country)),
   };
 };
 

@@ -1,16 +1,16 @@
+import Immutable from 'immutable';
 import React, {PropTypes} from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 import {List, OrderedSet} from 'immutable';
 
 import DoughnutChart from './DoughnutChart.jsx';
 import RadarChart from './RadarChart.jsx';
-import SelectedCountriesContainer from './SelectedCountriesContainer';
 import StackedLineChart from './StackedLineChart.jsx';
 
 class Charts extends React.Component {
   componentWillMount() {
-    const {years, resorts, loadStaticData} = this.props;
-    if (years.isEmpty() || resorts.isEmpty()) {
+    const {years, resorts, types, loadStaticData} = this.props;
+    if (years.isEmpty() || resorts.isEmpty() || types.isEmpty()) {
       loadStaticData();
       return null;
     }
@@ -28,10 +28,40 @@ class Charts extends React.Component {
     isFetching,
     years,
     resorts,
+    types,
   }) {
     if (!isFetching && stackedChartDatasets.size !== countries.size) {
-      loadData(countries, years, resorts);
+      loadData(countries, years, resorts, types);
     }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {
+      countries,
+      years,
+      resorts,
+      types,
+      stackedChartDatasets,
+      radarChartDatasets,
+      doughnutChartDatasets
+    } = this.props;
+    const {
+      countries: nextCountries,
+      years: nextYears,
+      resorts: nextResorts,
+      types: nextTypes,
+      stackedChartDatasets: nextStackedChartDatasets,
+      radarChartDatasets: nextRadarChartDatasets,
+      doughnutChartDatasets: nextDoughnutChartDatasets
+    } = nextProps;
+
+    return !Immutable.is(countries, nextCountries) ||
+      !Immutable.is(years, nextYears) ||
+      !Immutable.is(resorts, nextResorts) ||
+      !Immutable.is(types, nextTypes) ||
+      !Immutable.is(stackedChartDatasets, nextStackedChartDatasets) ||
+      !Immutable.is(radarChartDatasets, nextRadarChartDatasets) ||
+      !Immutable.is(doughnutChartDatasets, nextDoughnutChartDatasets);
   }
 
   render() {
@@ -39,17 +69,13 @@ class Charts extends React.Component {
       countries,
       years,
       resorts,
+      types,
       stackedChartDatasets,
       radarChartDatasets,
-      doughnutChartData
+      doughnutChartDatasets,
     } = this.props;
     return (
       <Grid>
-        <Row>
-          <Col xs={12} md={12} style={{margin: 15, paddingLeft: 60}}>
-            <SelectedCountriesContainer />
-          </Col>
-        </Row>
         <Row>
           <Col xs={12} md={12}>
             <StackedLineChart
@@ -61,7 +87,11 @@ class Charts extends React.Component {
         </Row>
         <Row>
           <Col xs={6} md={6}>
-            <DoughnutChart data={doughnutChartData} countries={countries} />
+            <DoughnutChart
+              datasets={doughnutChartDatasets}
+              countries={countries}
+              types={types}
+            />
           </Col>
           <Col xs={6} md={6}>
             <RadarChart
@@ -80,7 +110,8 @@ Charts.propTypes = {
   countries: PropTypes.instanceOf(OrderedSet).isRequired,
   stackedChartDatasets: PropTypes.instanceOf(List).isRequired,
   years: PropTypes.instanceOf(OrderedSet).isRequired,
-  doughnutChartData: PropTypes.object.isRequired,
+  doughnutChartDatasets: PropTypes.instanceOf(List).isRequired,
+  radarChartDatasets: PropTypes.instanceOf(List).isRequired,
   loadStaticData: PropTypes.func.isRequired,
 };
 

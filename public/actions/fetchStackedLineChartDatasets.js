@@ -43,7 +43,9 @@ export default createAction(
   ({years, countries}) => {
     return getStackedChartDatasets({countries})
       .then(({aggregations: {histogram: {buckets}}}) => {
-        const datasets = extractDataSets(buckets, countries.toJS(), years.toJS());
+        const datasets = extractDataSets(
+          buckets, countries.map(({name}) => name).toJS(), years.toJS()
+        );
         return List(datasets);
       });
   }

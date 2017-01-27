@@ -37,31 +37,16 @@ class Charts extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const {
-      countries,
-      years,
-      resorts,
-      types,
-      stackedChartDatasets,
-      radarChartDatasets,
-      doughnutChartDatasets
-    } = this.props;
-    const {
       countries: nextCountries,
-      years: nextYears,
-      resorts: nextResorts,
-      types: nextTypes,
       stackedChartDatasets: nextStackedChartDatasets,
       radarChartDatasets: nextRadarChartDatasets,
-      doughnutChartDatasets: nextDoughnutChartDatasets
+      doughnutChartDatasets: nextDoughnutChartDatasets,
     } = nextProps;
 
-    return !Immutable.is(countries, nextCountries) ||
-      !Immutable.is(years, nextYears) ||
-      !Immutable.is(resorts, nextResorts) ||
-      !Immutable.is(types, nextTypes) ||
-      !Immutable.is(stackedChartDatasets, nextStackedChartDatasets) ||
-      !Immutable.is(radarChartDatasets, nextRadarChartDatasets) ||
-      !Immutable.is(doughnutChartDatasets, nextDoughnutChartDatasets);
+    return !Immutable.is(this.countries, nextCountries) ||
+      !Immutable.is(this.stackedChartDatasets, nextStackedChartDatasets) ||
+      !Immutable.is(this.radarChartDatasets, nextRadarChartDatasets) ||
+      !Immutable.is(this.doughnutChartDatasets, nextDoughnutChartDatasets);
   }
 
   render() {
@@ -74,6 +59,12 @@ class Charts extends React.Component {
       radarChartDatasets,
       doughnutChartDatasets,
     } = this.props;
+
+    this.countries = countries;
+    this.stackedChartDatasets = stackedChartDatasets;
+    this.radarChartDatasets = radarChartDatasets;
+    this.doughnutChartDatasets = doughnutChartDatasets;
+
     return (
       <Grid>
         <Row>

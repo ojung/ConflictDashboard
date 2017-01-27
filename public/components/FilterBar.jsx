@@ -32,7 +32,7 @@ const FilterBar = ({
               <Label
                 style={{
                   color: color.isLight() ? '#000' : '#fff',
-                  backgroundColor: '#' + country.color,
+                  backgroundColor: country.color,
                   marginRight: 3,
                   cursor: 'pointer',
                 }}

@@ -37,31 +37,16 @@ class Charts extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const {
-      countries,
-      years,
-      resorts,
-      types,
-      stackedChartDatasets,
-      radarChartDatasets,
-      doughnutChartDatasets
-    } = this.props;
-    const {
       countries: nextCountries,
-      years: nextYears,
-      resorts: nextResorts,
-      types: nextTypes,
       stackedChartDatasets: nextStackedChartDatasets,
       radarChartDatasets: nextRadarChartDatasets,
-      doughnutChartDatasets: nextDoughnutChartDatasets
+      doughnutChartDatasets: nextDoughnutChartDatasets,
     } = nextProps;
 
-    return !Immutable.is(countries, nextCountries) ||
-      !Immutable.is(years, nextYears) ||
-      !Immutable.is(resorts, nextResorts) ||
-      !Immutable.is(types, nextTypes) ||
-      !Immutable.is(stackedChartDatasets, nextStackedChartDatasets) ||
-      !Immutable.is(radarChartDatasets, nextRadarChartDatasets) ||
-      !Immutable.is(doughnutChartDatasets, nextDoughnutChartDatasets);
+    return !Immutable.is(this.countries, nextCountries) ||
+      !Immutable.is(this.stackedChartDatasets, nextStackedChartDatasets) ||
+      !Immutable.is(this.radarChartDatasets, nextRadarChartDatasets) ||
+      !Immutable.is(this.doughnutChartDatasets, nextDoughnutChartDatasets);
   }
 
   render() {
@@ -74,8 +59,17 @@ class Charts extends React.Component {
       radarChartDatasets,
       doughnutChartDatasets,
     } = this.props;
+
+    this.countries = countries;
+    this.stackedChartDatasets = stackedChartDatasets;
+    this.radarChartDatasets = radarChartDatasets;
+    this.doughnutChartDatasets = doughnutChartDatasets;
+
     return (
       <Grid>
+        <hr />
+        <h4>Ausgaben pro Land von 2004 bis 2014</h4>
+        <br />
         <Row>
           <Col xs={12} md={12}>
             <StackedLineChart
@@ -85,8 +79,11 @@ class Charts extends React.Component {
             />
           </Col>
         </Row>
+        <hr />
         <Row>
           <Col xs={6} md={6}>
+            <h4>Ausgaben pro Typ</h4>
+            <br />
             <DoughnutChart
               datasets={doughnutChartDatasets}
               countries={countries}
@@ -94,6 +91,8 @@ class Charts extends React.Component {
             />
           </Col>
           <Col xs={6} md={6}>
+            <h4>Ausgaben pro Land pro Resort der Bundesregierung</h4>
+            <br />
             <RadarChart
               countries={countries}
               resorts={resorts}

@@ -54,10 +54,6 @@ const mapDispatchToProps = (dispatch) => {
         .then(() => dispatch(setIsFetching(false)));
     },
     loadData: (countries, years, resorts, types) => {
-      if (countries.size <= 0) {
-        return;
-      }
-
       dispatch(setIsFetching(true));
       Promise.all([
         dispatch(fetchStackedLineChartDatasets({years, countries})),

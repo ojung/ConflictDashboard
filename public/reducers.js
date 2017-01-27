@@ -64,9 +64,9 @@ const stackedChartDatasets = handleAction(
   List()
 );
 
-const doughnutChartDatasets = handleAction(
-  Actions.fetchDoughnutChartDatasets,
-  getReducerMap('fetchDoughnutChartDatasets'),
+const pieChartDatasets = handleAction(
+  Actions.fetchPieChartDatasets,
+  getReducerMap('fetchPieChartDatasets'),
   List()
 );
 
@@ -78,7 +78,7 @@ const radarChartDatasets = handleAction(
 
 const rootReducer = combineReducers({
   countries, types, resorts, suggestions, stackedChartDatasets, isFetching,
-  doughnutChartDatasets, years, radarChartDatasets
+  pieChartDatasets, years, radarChartDatasets
 });
 
 export default rootReducer;

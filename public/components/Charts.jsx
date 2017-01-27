@@ -67,6 +67,9 @@ class Charts extends React.Component {
 
     return (
       <Grid>
+        <hr />
+        <h4>Ausgaben pro Land von 2004 bis 2014</h4>
+        <br />
         <Row>
           <Col xs={12} md={12}>
             <StackedLineChart
@@ -76,8 +79,11 @@ class Charts extends React.Component {
             />
           </Col>
         </Row>
+        <hr />
         <Row>
           <Col xs={6} md={6}>
+            <h4>Ausgaben pro Typ</h4>
+            <br />
             <DoughnutChart
               datasets={doughnutChartDatasets}
               countries={countries}
@@ -85,6 +91,8 @@ class Charts extends React.Component {
             />
           </Col>
           <Col xs={6} md={6}>
+            <h4>Ausgaben pro Land pro Resort der Bundesregierung</h4>
+            <br />
             <RadarChart
               countries={countries}
               resorts={resorts}

@@ -2,7 +2,7 @@ import {createAction, createActions} from 'redux-actions';
 
 import fetchStackedLineChartDatasets from './fetchStackedLineChartDatasets';
 import fetchRadarChartDatasets from './fetchRadarChartDatasets';
-import fetchDoughnutChartDatasets from './fetchDoughnutChartDatasets';
+import fetchPieChartDatasets from './fetchPieChartDatasets';
 import loadSuggestions from './loadSuggestions';
 import fetchYears from './fetchYears';
 import fetchTypes from './fetchTypes';
@@ -13,7 +13,7 @@ export {
   fetchStackedLineChartDatasets,
   fetchRadarChartDatasets,
   loadSuggestions,
-  fetchDoughnutChartDatasets,
+  fetchPieChartDatasets,
   fetchYears,
   fetchTypes,
   fetchResorts,

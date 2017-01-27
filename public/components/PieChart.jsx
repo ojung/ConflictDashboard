@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Doughnut} from 'react-chartjs-2';
+import {Pie} from 'react-chartjs-2';
 import {List, OrderedSet} from 'immutable';
 
 const options = {
@@ -30,7 +30,7 @@ class DoughnutChart extends React.Component {
     }];
 
     return (
-      <Doughnut
+      <Pie
         data={{
           labels: types.toJS(),
           datasets: myDatasets,

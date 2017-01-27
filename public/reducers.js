@@ -27,6 +27,11 @@ const countries = handleActions({
     }
     return state.add(country);
   },
+  [Actions.addCountries]: (state, {payload: countries}) => {
+    const deduplicatdCountries = countries
+      .filter(country => !state.find(existingCountry => existingCountry.name === country.name));
+    return state.union(deduplicatdCountries);
+  },
   [Actions.removeCountry]: (state, {payload: country}) => state.remove(country),
 }, OrderedSet());
 

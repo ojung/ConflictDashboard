@@ -4,6 +4,7 @@ import FilterBar from './FilterBar.jsx';
 import {
   loadSuggestions,
   addCountry,
+  addCountries,
   clearSuggestions,
   removeCountry,
 } from '../actions/';
@@ -28,6 +29,7 @@ const mapDispatchToProps = (dispatch) => {
       }
     },
     removeCountry: (country) => dispatch(removeCountry(country)),
+    addQuickSelection: (countries) => dispatch(addCountries(countries)),
   };
 };
 

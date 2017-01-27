@@ -7,7 +7,7 @@ import loadSuggestions from './loadSuggestions';
 import fetchYears from './fetchYears';
 import fetchTypes from './fetchTypes';
 import fetchResorts from './fetchResorts';
-import {addCountry, removeCountry} from './countries';
+import {addCountry, addCountries, removeCountry} from './countries';
 
 export {
   fetchStackedLineChartDatasets,
@@ -18,6 +18,7 @@ export {
   fetchTypes,
   fetchResorts,
   addCountry,
+  addCountries,
   removeCountry,
 };
 

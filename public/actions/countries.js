@@ -1,9 +1,9 @@
-import Please from 'pleasejs';
+import randomColor from 'randomColor';
 import {createActions} from 'redux-actions';
 
 let colorCache = [];
 const getRandomColor = () => {
-  const color = Please.make_color()[0];
+  const color = randomColor();
   colorCache = [...colorCache, color];
   return color;
 };

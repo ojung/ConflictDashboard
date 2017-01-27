@@ -5,6 +5,9 @@ import {createAction} from 'redux-actions';
 import {getResorts} from '../api';
 
 const getSortedResorts = _.flow([
+  _.sortBy(['doc_count']),
+  _.reverse,
+  _.take(5),
   _.map('key'),
   _.sortBy([_.identity])
 ]);

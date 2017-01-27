@@ -1,14 +1,11 @@
-import ColorScheme from 'color-scheme';
+import Please from 'pleasejs';
 import {createActions} from 'redux-actions';
 
-const colors = new ColorScheme()
-  .from_hue(21)
-  .scheme('tetrade')
-  .variation('pastel')
-  .colors();
-
+let colorCache = [];
 const getRandomColor = () => {
-  return colors[Math.floor(Math.random() * colors.length)];
+  const color = Please.make_color()[0];
+  colorCache = [...colorCache, color];
+  return color;
 };
 
 export const {addCountry, removeCountry} = createActions({

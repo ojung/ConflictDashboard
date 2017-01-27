@@ -18,7 +18,7 @@
     "lodash": "^4.16.4",
     "minimist": "^1.2.0",
     "node-geocoder": "^3.15.1",
-    "pleasejs": "^0.4.2",
+    "randomcolor": "^0.4.4",
     "react": "^15.4.1",
     "react-bootstrap": "^0.30.7",
     "react-bootstrap-typeahead": "^1.0.0-beta4",

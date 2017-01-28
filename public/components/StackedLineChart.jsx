@@ -33,7 +33,7 @@ const options = {
 
 const getLineConfig = (country) => {
   const color = tinycolor(country.color);
-  const brightColor = color.clone().lighten();
+  const brightColor = color.clone().lighten(5);
   return {
     fill: true,
     lineTension: 0.1,

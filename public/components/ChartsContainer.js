@@ -46,7 +46,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadStaticData: () => {
       dispatch(setIsFetching(true));
-      Promise.all([
+      return Promise.all([
         dispatch(fetchYears()),
         dispatch(fetchResorts()),
         dispatch(fetchTypes()),
@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadData: (countries, years, resorts, types) => {
       dispatch(setIsFetching(true));
-      Promise.all([
+      return Promise.all([
         dispatch(fetchStackedLineChartDatasets({years, countries})),
         dispatch(fetchPieChartDatasets({types, countries})),
         dispatch(fetchRadarChartDatasets({resorts, countries})),

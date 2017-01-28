@@ -17,15 +17,13 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onChange: (value) => {
       if (value.length === 0) {
-        dispatch(clearSuggestions());
+        return dispatch(clearSuggestions());
       }
-      if (value.length >= 2) {
-        dispatch(loadSuggestions(value));
-      }
+      return dispatch(loadSuggestions(value));
     },
     onClick: (value) => {
       if (value.length) {
-        dispatch(addCountry(String(value)));
+        return dispatch(addCountry(String(value)));
       }
     },
     removeCountry: (country) => dispatch(removeCountry(country)),

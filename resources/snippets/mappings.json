@@ -47,9 +47,7 @@
           }
         },
         "location": {"type": "geo_point"},
-        "title": {
-          "type": "text"
-        },
+        "title": {"type": "text"},
         "amount": {"type": "double"},
         "budgetTitle": {
           "type": "text",

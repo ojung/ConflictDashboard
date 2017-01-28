@@ -70,12 +70,10 @@ export function getCountrySuggestion(input) {
     index: 'bundestag',
     body: {
       size: 0,
-      _source: ['country'],
       query: {
         match: {
           country: {
-            query: input,
-            operator: 'and'
+            query: input
           }
         }
       },

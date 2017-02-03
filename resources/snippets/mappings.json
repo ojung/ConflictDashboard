@@ -1,5 +1,7 @@
 {
   "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
     "analysis": {
       "analyzer": {
         "autocomplete": {
@@ -15,7 +17,7 @@
       "tokenizer": {
         "autocomplete": {
           "type": "edge_ngram",
-          "min_gram": 2,
+          "min_gram": 1,
           "max_gram": 15,
           "token_chars": [
             "letter"
@@ -47,9 +49,7 @@
           }
         },
         "location": {"type": "geo_point"},
-        "title": {
-          "type": "text"
-        },
+        "title": {"type": "text"},
         "amount": {"type": "double"},
         "budgetTitle": {
           "type": "text",

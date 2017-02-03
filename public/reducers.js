@@ -27,6 +27,11 @@ const countries = handleActions({
     }
     return state.add(country);
   },
+  [Actions.addCountries]: (state, {payload: countries}) => {
+    const deduplicatdCountries = countries
+      .filter(country => !state.find(existingCountry => existingCountry.name === country.name));
+    return state.union(deduplicatdCountries);
+  },
   [Actions.removeCountry]: (state, {payload: country}) => state.remove(country),
 }, OrderedSet());
 
@@ -59,9 +64,9 @@ const stackedChartDatasets = handleAction(
   List()
 );
 
-const doughnutChartDatasets = handleAction(
-  Actions.fetchDoughnutChartDatasets,
-  getReducerMap('fetchDoughnutChartDatasets'),
+const pieChartDatasets = handleAction(
+  Actions.fetchPieChartDatasets,
+  getReducerMap('fetchPieChartDatasets'),
   List()
 );
 
@@ -73,7 +78,7 @@ const radarChartDatasets = handleAction(
 
 const rootReducer = combineReducers({
   countries, types, resorts, suggestions, stackedChartDatasets, isFetching,
-  doughnutChartDatasets, years, radarChartDatasets
+  pieChartDatasets, years, radarChartDatasets
 });
 
 export default rootReducer;

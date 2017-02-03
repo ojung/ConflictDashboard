@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
-import {Doughnut} from 'react-chartjs-2';
+import randomColor from 'randomcolor';
+import {Pie} from 'react-chartjs-2';
 import {List, OrderedSet} from 'immutable';
 
 const options = {
@@ -13,6 +14,8 @@ const options = {
   }
 };
 
+const colors = [randomColor(), randomColor(), randomColor()];
+
 class DoughnutChart extends React.Component {
   render() {
     const {types, datasets, countries} = this.props;
@@ -22,15 +25,11 @@ class DoughnutChart extends React.Component {
 
     const myDatasets = [{
       data: datasets.toJS(),
-      backgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56'
-      ],
+      backgroundColor: [colors[0], colors[1], colors[2]],
     }];
 
     return (
-      <Doughnut
+      <Pie
         data={{
           labels: types.toJS(),
           datasets: myDatasets,

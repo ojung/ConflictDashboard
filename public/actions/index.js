@@ -2,22 +2,23 @@ import {createAction, createActions} from 'redux-actions';
 
 import fetchStackedLineChartDatasets from './fetchStackedLineChartDatasets';
 import fetchRadarChartDatasets from './fetchRadarChartDatasets';
-import fetchDoughnutChartDatasets from './fetchDoughnutChartDatasets';
+import fetchPieChartDatasets from './fetchPieChartDatasets';
 import loadSuggestions from './loadSuggestions';
 import fetchYears from './fetchYears';
 import fetchTypes from './fetchTypes';
 import fetchResorts from './fetchResorts';
-import {addCountry, removeCountry} from './countries';
+import {addCountry, addCountries, removeCountry} from './countries';
 
 export {
   fetchStackedLineChartDatasets,
   fetchRadarChartDatasets,
   loadSuggestions,
-  fetchDoughnutChartDatasets,
+  fetchPieChartDatasets,
   fetchYears,
   fetchTypes,
   fetchResorts,
   addCountry,
+  addCountries,
   removeCountry,
 };
 

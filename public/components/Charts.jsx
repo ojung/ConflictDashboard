@@ -3,7 +3,7 @@ import React, {PropTypes} from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 import {List, OrderedSet} from 'immutable';
 
-import DoughnutChart from './DoughnutChart.jsx';
+import PieChart from './PieChart.jsx';
 import RadarChart from './RadarChart.jsx';
 import StackedLineChart from './StackedLineChart.jsx';
 
@@ -40,13 +40,13 @@ class Charts extends React.Component {
       countries: nextCountries,
       stackedChartDatasets: nextStackedChartDatasets,
       radarChartDatasets: nextRadarChartDatasets,
-      doughnutChartDatasets: nextDoughnutChartDatasets,
+      pieChartDatasets: nextPieChartDatasets,
     } = nextProps;
 
     return !Immutable.is(this.countries, nextCountries) ||
       !Immutable.is(this.stackedChartDatasets, nextStackedChartDatasets) ||
       !Immutable.is(this.radarChartDatasets, nextRadarChartDatasets) ||
-      !Immutable.is(this.doughnutChartDatasets, nextDoughnutChartDatasets);
+      !Immutable.is(this.pieChartDatasets, nextPieChartDatasets);
   }
 
   render() {
@@ -57,18 +57,18 @@ class Charts extends React.Component {
       types,
       stackedChartDatasets,
       radarChartDatasets,
-      doughnutChartDatasets,
+      pieChartDatasets,
     } = this.props;
 
     this.countries = countries;
     this.stackedChartDatasets = stackedChartDatasets;
     this.radarChartDatasets = radarChartDatasets;
-    this.doughnutChartDatasets = doughnutChartDatasets;
+    this.pieChartDatasets = pieChartDatasets;
 
     return (
       <Grid>
         <hr />
-        <h4>Ausgaben pro Land von 2004 bis 2014</h4>
+        <h4>Ausgaben der ausgewählten Länder von 2004 bis 2014</h4>
         <br />
         <Row>
           <Col xs={12} md={12}>
@@ -84,8 +84,8 @@ class Charts extends React.Component {
           <Col xs={6} md={6}>
             <h4>Ausgaben pro Typ</h4>
             <br />
-            <DoughnutChart
-              datasets={doughnutChartDatasets}
+            <PieChart
+              datasets={pieChartDatasets}
               countries={countries}
               types={types}
             />
@@ -109,7 +109,7 @@ Charts.propTypes = {
   countries: PropTypes.instanceOf(OrderedSet).isRequired,
   stackedChartDatasets: PropTypes.instanceOf(List).isRequired,
   years: PropTypes.instanceOf(OrderedSet).isRequired,
-  doughnutChartDatasets: PropTypes.instanceOf(List).isRequired,
+  pieChartDatasets: PropTypes.instanceOf(List).isRequired,
   radarChartDatasets: PropTypes.instanceOf(List).isRequired,
   loadStaticData: PropTypes.func.isRequired,
 };

@@ -5,43 +5,6 @@ const client = new elasticsearch.Client({
   log: 'info',
 });
 
-export function getRadarChartDatasets({countries}) {
-  return client.search({
-    index: 'bundestag',
-    body: {
-      size: 0,
-      query: {
-        bool: {
-          should: getShoulds(countries)
-        }
-      },
-      aggs: {
-        countries: {
-          terms: {
-            field: 'country.keyword',
-            size: 500
-          },
-          aggs: {
-            resorts: {
-              terms: {
-                field: 'resort.keyword',
-                size: 500
-              },
-              aggs: {
-                sum: {
-                  sum: {
-                    field: 'amount'
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  });
-}
-
 export function getResorts() {
   return client.search({
     index: 'bundestag',
@@ -107,12 +70,10 @@ export function getCountrySuggestion(input) {
     index: 'bundestag',
     body: {
       size: 0,
-      _source: ['country'],
       query: {
         match: {
           country: {
-            query: input,
-            operator: 'and'
+            query: input
           }
         }
       },
@@ -120,6 +81,72 @@ export function getCountrySuggestion(input) {
         distinct_countries: {
           terms: {
             field: 'country.keyword'
+          }
+        }
+      }
+    }
+  });
+}
+
+export function getDoughnutChartData({countries}) {
+  return client.search({
+    index: 'bundestag',
+    body: {
+      size: 0,
+      query: {
+        bool: {
+          should: getShoulds(countries),
+        }
+      },
+      aggs: {
+        type: {
+          terms: {
+            field: 'type.keyword',
+            size: 500
+          },
+          aggs: {
+            sum: {
+              sum: {
+                field: 'amount'
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+export function getRadarChartDatasets({countries}) {
+  return client.search({
+    index: 'bundestag',
+    body: {
+      size: 0,
+      query: {
+        bool: {
+          should: getShoulds(countries)
+        }
+      },
+      aggs: {
+        countries: {
+          terms: {
+            field: 'country.keyword',
+            size: 500
+          },
+          aggs: {
+            resorts: {
+              terms: {
+                field: 'resort.keyword',
+                size: 500
+              },
+              aggs: {
+                sum: {
+                  sum: {
+                    field: 'amount'
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -155,35 +182,6 @@ export function getStackedChartDatasets({countries}) {
                     field: 'amount'
                   }
                 }
-              }
-            }
-          }
-        }
-      }
-    }
-  });
-}
-
-export function getDoughnutChartData({countries}) {
-  return client.search({
-    index: 'bundestag',
-    body: {
-      size: 0,
-      query: {
-        bool: {
-          should: getShoulds(countries),
-        }
-      },
-      aggs: {
-        type: {
-          terms: {
-            field: 'type.keyword',
-            size: 500
-          },
-          aggs: {
-            sum: {
-              sum: {
-                field: 'amount'
               }
             }
           }

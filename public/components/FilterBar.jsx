@@ -4,18 +4,21 @@ import {Navbar, Label, Glyphicon} from 'react-bootstrap';
 import {OrderedSet} from 'immutable';
 import {Typeahead} from 'react-bootstrap-typeahead';
 
+import QuickSelection from './QuickSelection.jsx';
+
 const FilterBar = ({
   suggestions,
   onClick,
   onChange,
+  addQuickSelection,
   countries,
   removeCountry
 }) => (
   <Navbar>
-    <Navbar.Header>
-      <Navbar.Brand>
-        <a>Filter</a>
-      </Navbar.Brand>
+    <Navbar.Header style={{
+      paddingTop: 7,
+    }}>
+      <QuickSelection onClick={addQuickSelection} />
     </Navbar.Header>
     <Navbar.Form pullLeft>
       <Typeahead

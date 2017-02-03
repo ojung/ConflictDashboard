@@ -1,0 +1,42 @@
+{
+  "size": 0,
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match": {
+            "country.keyword": "Serbien"
+          }
+        },
+        {
+          "match": {
+            "country.keyword": "Kosovo"
+          }
+        }
+      ]
+    }
+  },
+  "aggs": {
+    "histogram": {
+      "date_histogram": {
+        "field": "year",
+        "interval": "year"
+      },
+      "aggs": {
+        "country_buckets": {
+          "terms": {
+            "field": "country.keyword",
+            "size": 500
+          },
+          "aggs": {
+            "sum_by_country": {
+              "sum": {
+                "field": "amount"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

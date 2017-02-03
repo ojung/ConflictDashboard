@@ -1,0 +1,17 @@
+{
+  "size": 0,
+  "query": {
+    "match": {
+      "country": {
+        "query": "ma"
+      }
+    }
+  },
+  "aggs": {
+    "distinct_countries": {
+      "terms": {
+        "field": "country.keyword"
+      }
+    }
+  }
+}

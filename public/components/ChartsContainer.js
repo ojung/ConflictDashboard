@@ -6,7 +6,7 @@ import {
   fetchStackedLineChartDatasets,
   fetchRadarChartDatasets,
   setIsFetching,
-  fetchDoughnutChartDatasets,
+  fetchPieChartDatasets,
   fetchYears,
   fetchResorts,
   fetchTypes,
@@ -16,8 +16,8 @@ const getCountries = ({countries}) => countries;
 
 const getStackedChartDatasets = ({stackedChartDatasets}) => stackedChartDatasets;
 
-const getDoughnutChartDatasets =
-  ({doughnutChartDatasets}) => doughnutChartDatasets;
+const getPieChartDatasets =
+  ({pieChartDatasets}) => pieChartDatasets;
 
 const getIsFetching = ({isFetching}) => isFetching;
 
@@ -32,7 +32,7 @@ const getRadarChartDatasets = ({radarChartDatasets}) => radarChartDatasets;
 const mapStateToProps = (state) => {
   return {
     stackedChartDatasets: getStackedChartDatasets(state),
-    doughnutChartDatasets: getDoughnutChartDatasets(state),
+    pieChartDatasets: getPieChartDatasets(state),
     countries: getCountries(state),
     years: getYears(state),
     types: getTypes(state),
@@ -46,7 +46,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadStaticData: () => {
       dispatch(setIsFetching(true));
-      Promise.all([
+      return Promise.all([
         dispatch(fetchYears()),
         dispatch(fetchResorts()),
         dispatch(fetchTypes()),
@@ -55,9 +55,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadData: (countries, years, resorts, types) => {
       dispatch(setIsFetching(true));
-      Promise.all([
+      return Promise.all([
         dispatch(fetchStackedLineChartDatasets({years, countries})),
-        dispatch(fetchDoughnutChartDatasets({types, countries})),
+        dispatch(fetchPieChartDatasets({types, countries})),
         dispatch(fetchRadarChartDatasets({resorts, countries})),
       ])
         .then(() => dispatch(setIsFetching(false)));

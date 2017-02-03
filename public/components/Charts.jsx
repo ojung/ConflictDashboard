@@ -68,7 +68,7 @@ class Charts extends React.Component {
     return (
       <Grid>
         <hr />
-        <h4>Ausgaben pro Land von 2004 bis 2014</h4>
+        <h4>Ausgaben der ausgewählten Länder von 2004 bis 2014</h4>
         <br />
         <Row>
           <Col xs={12} md={12}>

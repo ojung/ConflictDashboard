@@ -20,9 +20,9 @@ const options = {
   },
   tooltips: {
     callbacks: {
-      label: ({index}, {datasets, labels}) => {
+      label: ({index, datasetIndex}, {datasets, labels}) => {
         return labels[index] + ': '
-          + datasets[0].data[index].toLocaleString() + ' Euro';
+          + datasets[datasetIndex].data[index].toLocaleString() + ' Euro';
       }
     }
   }

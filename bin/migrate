@@ -6,4 +6,4 @@ DIR=`pwd`
 INDEX=$1; shift
 MAPPINGS=$1; shift
 
-node --harmony lib/migrate.js $INDEX $DIR/$MAPPINGS
+node --harmony lib/tools/migrate.js $INDEX $DIR/$MAPPINGS

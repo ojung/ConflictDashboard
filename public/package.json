@@ -1,0 +1,45 @@
+{
+  "name": "mapper",
+  "version": "1.0.0",
+  "description": "krisenprävention",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack --progress --colors --watch",
+    "serve": "cd public && python -m SimpleHTTPServer 8888"
+  },
+  "author": "Oskar Jung",
+  "license": "ISC",
+  "dependencies": {
+    "accounting": "^0.4.1",
+    "bluebird": "^3.4.7",
+    "chart.js": "^2.4.0",
+    "elasticsearch": "^11.0.1",
+    "getenv": "^0.7.0",
+    "immutable": "^3.8.1",
+    "lodash": "^4.16.4",
+    "minimist": "^1.2.0",
+    "node-geocoder": "^3.15.1",
+    "randomcolor": "^0.4.4",
+    "react": "^15.4.1",
+    "react-bootstrap": "^0.30.7",
+    "react-bootstrap-typeahead": "^1.0.0-beta4",
+    "react-chartjs-2": "^2.0.0",
+    "react-dom": "^15.4.1",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0",
+    "redux-actions": "^1.2.0",
+    "redux-promise": "^0.5.3",
+    "reselect": "^2.5.4",
+    "tinycolor2": "^1.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.8",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "eslint": "^3.11.0",
+    "webpack": "^1.13.3"
+  }
+}
